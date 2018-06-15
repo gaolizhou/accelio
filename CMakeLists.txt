@@ -1,0 +1,210 @@
+cmake_minimum_required(VERSION 3.10)
+project(accelio)
+
+set(CMAKE_CXX_STANDARD 11)
+
+include_directories(benchmarks/usr/xio_perftest)
+include_directories(examples/raio/kernel/nbdx)
+include_directories(examples/raio/usr/client)
+include_directories(examples/raio/usr/libraio)
+include_directories(examples/raio/usr/server)
+include_directories(include)
+include_directories(regression/usr/common)
+include_directories(src/common)
+include_directories(src/common/sys)
+include_directories(src/libxio_os)
+include_directories(src/libxio_os/linuxapp)
+include_directories(src/libxio_os/linuxkernel)
+include_directories(src/libxio_os/winapp)
+include_directories(src/usr/linux)
+include_directories(src/usr/transport)
+include_directories(src/usr/transport/rdma)
+include_directories(src/usr/transport/tcp)
+include_directories(src/usr/xio)
+include_directories(tests/portable)
+include_directories(tests/portable/direct_rdma_test)
+include_directories(tests/usr/common)
+
+add_executable(accelio
+        benchmarks/usr/xio_perftest/get_clock.c
+        benchmarks/usr/xio_perftest/get_clock.h
+        benchmarks/usr/xio_perftest/xio_msg.c
+        benchmarks/usr/xio_perftest/xio_msg.h
+        benchmarks/usr/xio_perftest/xio_perftest.c
+        benchmarks/usr/xio_perftest/xio_perftest.h
+        benchmarks/usr/xio_perftest/xio_perftest_client.c
+        benchmarks/usr/xio_perftest/xio_perftest_communication.c
+        benchmarks/usr/xio_perftest/xio_perftest_communication.h
+        benchmarks/usr/xio_perftest/xio_perftest_parameters.c
+        benchmarks/usr/xio_perftest/xio_perftest_parameters.h
+        benchmarks/usr/xio_perftest/xio_perftest_resources.h
+        benchmarks/usr/xio_perftest/xio_perftest_server.c
+        examples/raio/usr/client/get_clock.c
+        examples/raio/usr/client/get_clock.h
+        examples/raio/usr/client/raio_client.c
+        examples/raio/usr/fio/libraio.c
+        examples/raio/usr/libraio/libraio.h
+        examples/raio/usr/libraio/raio_api.c
+        examples/raio/usr/libraio/raio_buffer.h
+        examples/raio/usr/libraio/raio_command.h
+        examples/raio/usr/libraio/raio_msg_pool.c
+        examples/raio/usr/libraio/raio_msg_pool.h
+        examples/raio/usr/libraio/raio_utils.c
+        examples/raio/usr/libraio/raio_utils.h
+        examples/raio/usr/server/bitset.c
+        examples/raio/usr/server/bitset.h
+        examples/raio/usr/server/raio_bs.c
+        examples/raio/usr/server/raio_bs.h
+        examples/raio/usr/server/raio_bs_aio.c
+        examples/raio/usr/server/raio_bs_null.c
+        examples/raio/usr/server/raio_handlers.c
+        examples/raio/usr/server/raio_handlers.h
+        examples/raio/usr/server/raio_server.c
+        examples/usr/hello_world/xio_client.c
+        examples/usr/hello_world/xio_server.c
+        examples/usr/hello_world_daemon/xioclntd.c
+        examples/usr/hello_world_daemon/xiosrvd.c
+        examples/usr/hello_world_iov/xio_client.c
+        examples/usr/hello_world_iov/xio_server.c
+        examples/usr/hello_world_libevent/xio_client.c
+        examples/usr/hello_world_libevent/xio_server.c
+        examples/usr/hello_world_mt/xio_mt_client.c
+        examples/usr/hello_world_mt/xio_mt_server.c
+        include/libxio.h
+        include/xio_base.h
+        include/xio_kernel.h
+        include/xio_predefs.h
+        include/xio_user.h
+        regression/usr/common/obj_pool.h
+        regression/usr/common/reg_utils.h
+        regression/usr/reg_basic_mt/reg_basic_mt.c
+        regression/usr/reg_basic_mt/reg_basic_mt_client.c
+        regression/usr/reg_basic_mt/reg_basic_mt_server.c
+        src/common/sys/hashtable.h
+        src/common/xio_common.h
+        src/common/xio_connection.c
+        src/common/xio_connection.h
+        src/common/xio_context.h
+        src/common/xio_error.c
+        src/common/xio_hash.h
+        src/common/xio_idr.c
+        src/common/xio_idr.h
+        src/common/xio_mbuf.h
+        src/common/xio_msg_list.h
+        src/common/xio_nexus.c
+        src/common/xio_nexus.h
+        src/common/xio_nexus_cache.c
+        src/common/xio_nexus_cache.h
+        src/common/xio_objpool.c
+        src/common/xio_objpool.h
+        src/common/xio_observer.c
+        src/common/xio_observer.h
+        src/common/xio_options.c
+        src/common/xio_protocol.h
+        src/common/xio_server.c
+        src/common/xio_server.h
+        src/common/xio_session.c
+        src/common/xio_session.h
+        src/common/xio_session_client.c
+        src/common/xio_session_priv.h
+        src/common/xio_session_server.c
+        src/common/xio_sessions_cache.c
+        src/common/xio_sessions_cache.h
+        src/common/xio_sg_table.h
+        src/common/xio_task.h
+        src/common/xio_transport.c
+        src/common/xio_transport.h
+        src/common/xio_utils.c
+        src/common/xio_workqueue.h
+        src/libxio_os/linuxapp/xio_env.h
+        src/libxio_os/linuxapp/xio_env_adv.h
+        src/libxio_os/linuxapp/xio_env_basic.h
+        src/libxio_os/linuxkernel/xio_env.h
+        src/libxio_os/linuxkernel/xio_env_adv.h
+        src/libxio_os/linuxkernel/xio_env_basic.h
+        src/libxio_os/winapp/list.h
+        src/libxio_os/winapp/spinlock.h
+        src/libxio_os/winapp/xio_env.h
+        src/libxio_os/winapp/xio_env_adv.h
+        src/libxio_os/winapp/xio_env_basic.h
+        src/libxio_os/winapp/xio_os.h
+        src/tools/usr/xio_if_numa_cpus.c
+        src/tools/usr/xio_mem_usage.c
+        src/usr/linux/atomic.h
+        src/usr/linux/bitops.h
+        src/usr/linux/debugfs.h
+        src/usr/linux/jiffies.h
+        src/usr/linux/kernel.h
+        src/usr/linux/kref.h
+        src/usr/linux/list.h
+        src/usr/linux/printk.h
+        src/usr/linux/slab.h
+        src/usr/linux/usr.h
+        src/usr/transport/rdma/ib_cm.h
+        src/usr/transport/rdma/xio_rdma_datapath.c
+        src/usr/transport/rdma/xio_rdma_management.c
+        src/usr/transport/rdma/xio_rdma_transport.h
+        src/usr/transport/rdma/xio_rdma_utils.c
+        src/usr/transport/rdma/xio_rdma_utils.h
+        src/usr/transport/rdma/xio_rdma_verbs.c
+        src/usr/transport/tcp/xio_tcp_datapath.c
+        src/usr/transport/tcp/xio_tcp_management.c
+        src/usr/transport/tcp/xio_tcp_transport.h
+        src/usr/transport/xio_mempool.c
+        src/usr/transport/xio_mempool.h
+        src/usr/transport/xio_usr_transport.c
+        src/usr/transport/xio_usr_transport.h
+        src/usr/xio/get_clock.c
+        src/usr/xio/get_clock.h
+        src/usr/xio/xio_context.c
+        src/usr/xio/xio_context_priv.h
+        src/usr/xio/xio_ev_data.h
+        src/usr/xio/xio_ev_loop.c
+        src/usr/xio/xio_ev_loop.h
+        src/usr/xio/xio_init.c
+        src/usr/xio/xio_init.h
+        src/usr/xio/xio_log.c
+        src/usr/xio/xio_log.h
+        src/usr/xio/xio_mem.c
+        src/usr/xio/xio_mem.h
+        src/usr/xio/xio_netlink.c
+        src/usr/xio/xio_os.h
+        src/usr/xio/xio_sg_iov.c
+        src/usr/xio/xio_sg_iovptr.c
+        src/usr/xio/xio_sg_table.c
+        src/usr/xio/xio_task.c
+        src/usr/xio/xio_timers_list.h
+        src/usr/xio/xio_tls.c
+        src/usr/xio/xio_tls.h
+        src/usr/xio/xio_usr_utils.c
+        src/usr/xio/xio_usr_utils.h
+        src/usr/xio/xio_workqueue.c
+        src/usr/xio/xio_workqueue_priv.h
+        tests/portable/direct_rdma_test/xio_rdma_common.c
+        tests/portable/direct_rdma_test/xio_rdma_common.h
+        tests/portable/abstraction.h
+        tests/usr/common/xio_intf.c
+        tests/usr/common/xio_intf.h
+        tests/usr/common/xio_msg.c
+        tests/usr/common/xio_msg.h
+        tests/usr/common/xio_test_utils.c
+        tests/usr/common/xio_test_utils.h
+        tests/usr/common/xio_thread.c
+        tests/usr/common/xio_thread.h
+        tests/usr/direct_rdma_test/xio_rdma_client.c
+        tests/usr/direct_rdma_test/xio_rdma_common_usr.c
+        tests/usr/direct_rdma_test/xio_rdma_server.c
+        tests/usr/event_loop_tests/event_loop_tests.c
+        tests/usr/hello_test/xio_client.c
+        tests/usr/hello_test/xio_server.c
+        tests/usr/hello_test_bidi/xio_bidi_client.c
+        tests/usr/hello_test_bidi/xio_bidi_server.c
+        tests/usr/hello_test_lat/xio_lat_client.c
+        tests/usr/hello_test_lat/xio_lat_server.c
+        tests/usr/hello_test_mt/xio_mt_client.c
+        tests/usr/hello_test_mt/xio_mt_server.c
+        tests/usr/hello_test_oneway/xio_oneway_client.c
+        tests/usr/hello_test_oneway/xio_oneway_server.c
+        tests/usr/hello_test_ow/xio_ow_client.c
+        tests/usr/hello_test_ow/xio_ow_server.c
+        version.c)
