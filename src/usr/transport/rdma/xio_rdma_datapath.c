@@ -111,6 +111,10 @@ int xio_post_recv(struct xio_rdma_transport *rdma_hndl,
 	retval = ibv_post_srq_recv(rdma_hndl->tcq->srq->srq,
 			&rdma_task->rxd.recv_wr, &bad_wr);
 #else
+  TRACE_LOG("num_recv_bufs=%d, qp=%#p, wr_id=%d, num_sge=%d, sg[0]=%d,%#p, sg[1]=%d,%#p\n", 
+             num_recv_bufs, rdma_hndl->qp, rdma_task->rxd.recv_wr.wr_id, rdma_task->rxd.recv_wr.num_sge,
+             rdma_task->rxd.recv_wr.sg_list[0].length, rdma_task->rxd.recv_wr.sg_list[0].addr,
+             rdma_task->rxd.recv_wr.sg_list[1].length, rdma_task->rxd.recv_wr.sg_list[1].addr);
 	retval = ibv_post_recv(rdma_hndl->qp, &rdma_task->rxd.recv_wr, &bad_wr);
 #endif
 	if (likely(!retval)) {
