@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 project(accelio)
 
 set(CMAKE_CXX_STANDARD 11)
+add_definitions(-DHAVE_INFINIBAND_VERBS_H)
 
-include_directories(benchmarks/usr/xio_perftest)
+#include_directories(benchmarks/usr/xio_perftest)
 include_directories(examples/raio/kernel/nbdx)
 include_directories(examples/raio/usr/client)
 include_directories(examples/raio/usr/libraio)
@@ -25,20 +26,21 @@ include_directories(tests/portable)
 include_directories(tests/portable/direct_rdma_test)
 include_directories(tests/usr/common)
 
+#        benchmarks/usr/xio_perftest/get_clock.c
+#        benchmarks/usr/xio_perftest/get_clock.h
+#        benchmarks/usr/xio_perftest/xio_msg.c
+#        benchmarks/usr/xio_perftest/xio_msg.h
+#        benchmarks/usr/xio_perftest/xio_perftest.c
+#        benchmarks/usr/xio_perftest/xio_perftest.h
+#        benchmarks/usr/xio_perftest/xio_perftest_client.c
+#        benchmarks/usr/xio_perftest/xio_perftest_communication.c
+#        benchmarks/usr/xio_perftest/xio_perftest_communication.h
+#        benchmarks/usr/xio_perftest/xio_perftest_parameters.c
+#        benchmarks/usr/xio_perftest/xio_perftest_parameters.h
+#        benchmarks/usr/xio_perftest/xio_perftest_resources.h
+#        benchmarks/usr/xio_perftest/xio_perftest_server.c
+
 add_executable(accelio
-        benchmarks/usr/xio_perftest/get_clock.c
-        benchmarks/usr/xio_perftest/get_clock.h
-        benchmarks/usr/xio_perftest/xio_msg.c
-        benchmarks/usr/xio_perftest/xio_msg.h
-        benchmarks/usr/xio_perftest/xio_perftest.c
-        benchmarks/usr/xio_perftest/xio_perftest.h
-        benchmarks/usr/xio_perftest/xio_perftest_client.c
-        benchmarks/usr/xio_perftest/xio_perftest_communication.c
-        benchmarks/usr/xio_perftest/xio_perftest_communication.h
-        benchmarks/usr/xio_perftest/xio_perftest_parameters.c
-        benchmarks/usr/xio_perftest/xio_perftest_parameters.h
-        benchmarks/usr/xio_perftest/xio_perftest_resources.h
-        benchmarks/usr/xio_perftest/xio_perftest_server.c
         examples/raio/usr/client/get_clock.c
         examples/raio/usr/client/get_clock.h
         examples/raio/usr/client/raio_client.c
@@ -122,12 +124,6 @@ add_executable(accelio
         src/libxio_os/linuxkernel/xio_env.h
         src/libxio_os/linuxkernel/xio_env_adv.h
         src/libxio_os/linuxkernel/xio_env_basic.h
-        src/libxio_os/winapp/list.h
-        src/libxio_os/winapp/spinlock.h
-        src/libxio_os/winapp/xio_env.h
-        src/libxio_os/winapp/xio_env_adv.h
-        src/libxio_os/winapp/xio_env_basic.h
-        src/libxio_os/winapp/xio_os.h
         src/tools/usr/xio_if_numa_cpus.c
         src/tools/usr/xio_mem_usage.c
         src/usr/linux/atomic.h
