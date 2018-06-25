@@ -1178,7 +1178,7 @@ static XIO_F_ALWAYS_INLINE void xio_handle_wc(struct ibv_wc *wc,
 	case IBV_WC_RECV:
 		task->last_in_rxq = last_in_rxq;
 		xio_rdma_rx_handler(rdma_hndl, task);
-		TRACE_LOG("wr_id=%#x\n", wc->wr_id);
+		TRACE_LOG("wr_id=%#x, status=%#x, opcode=%#x\n", wc->wr_id, wc->status, wc->opcode);
 		break;
 	case IBV_WC_SEND:
 	case IBV_WC_RDMA_WRITE:
