@@ -157,14 +157,18 @@ void msg_api_free(struct msg_params *msg_params)
 int msg_api_init(struct msg_params *msg_params,
 		 size_t hdrlen, size_t datalen, int is_server)
 {
-	const char	*req_hdr = "hello world request header";
-	const char	*req_data = "hello world request data";
-	const char	*rsp_hdr =  "hello world response header";
-	const char	*rsp_data = "hello world response data";
-	const char	*ptr;
+	char	req_hdr[128] = "hello world request header ";
+	char	req_data[128] = "hello world request data ";
+	char	rsp_hdr[128] =  "hello world response header ";
+	char	rsp_data[128] = "hello world response data ";
+	char	*ptr;
 	size_t		len;
 	int		pagesize = sysconf(_SC_PAGESIZE);
 	struct xio_reg_mem reg_mem;
+	static int index = 0;
+    char index_str[128] = {0};
+
+	sprintf(index_str, ",index=%d", index++);
 
 	if (pagesize < 0)
 		return -1;
@@ -190,6 +194,13 @@ int msg_api_init(struct msg_params *msg_params,
 		if (!msg_params->g_data)
 			goto cleanup;
 		ptr = (is_server) ? rsp_data : req_data;
+        if(is_server) {
+        	strcat(ptr, ", from server");
+        } else {
+			strcat(ptr, ", from client");
+		}
+		strcat(ptr, index_str);
+
 		len = strlen(ptr);
 		if (datalen <= len)
 			len = datalen - 1;

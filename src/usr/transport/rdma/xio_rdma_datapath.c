@@ -160,13 +160,13 @@ static int xio_post_send(struct xio_rdma_transport *rdma_hndl,
 	struct ibv_send_wr	*bad_wr;
 	int			retval, nr_posted;
 
-	TRACE_LOG("num_sge:%d, len1:%d, len2:%d, send_flags:%d, addr1=%#p, addr2=%#p qp=%#x\n",
+	TRACE_LOG("num_sge:%d, len1:%d, len2:%d, send_flags:%d, addr1=%#p, addr2=%#p\n",
 		  xio_send->send_wr.num_sge,
 		  xio_send->send_wr.sg_list[0].length,
 		  xio_send->send_wr.sg_list[1].length,
 		  xio_send->send_wr.send_flags,
       xio_send->send_wr.sg_list[0].addr,
-      xio_send->send_wr.sg_list[1].addr, rdma_hndl->qp);
+      xio_send->send_wr.sg_list[1].addr);
     TRACE_LOG("sg_list[0]=%s, sg_list[1]=%s\n", xio_send->send_wr.sg_list[0].addr, xio_send->send_wr.sg_list[1].addr);
 	retval = ibv_post_send(rdma_hndl->qp, &xio_send->send_wr, &bad_wr);
 	if (likely(!retval)) {
