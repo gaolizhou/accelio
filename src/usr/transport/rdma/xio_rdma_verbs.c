@@ -237,7 +237,8 @@ static struct xio_mr_elem *xio_reg_mr_ex_dev(struct xio_device *dev,
 	reg_mr_in.exp_access = access;
 	reg_mr_in.comp_mask = 0;
 
-	TRACE_LOG("before ibv_reg_mr\n");
+	TRACE_LOG("before ibv_reg_mr addr=%#p, len=%d access=%#x, pd=%#p\n", 
+        reg_mr_in.addr, reg_mr_in.length, reg_mr_in.exp_access, reg_mr_in.pd);
 	mr = ibv_xio_reg_mr(&reg_mr_in);
 	TRACE_LOG("after ibv_reg_mr\n");
 	if (unlikely(!mr)) {
