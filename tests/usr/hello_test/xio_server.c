@@ -463,6 +463,7 @@ int main(int argc, char *argv[])
 	char			url[256];
 	int			in_iov_len = PEER_MAX_OUT_IOVLEN;
 	int			out_iov_len = PEER_MAX_IN_IOVLEN;
+  enum xio_log_level xio_log_level = XIO_LOG_LEVEL_TRACE;
 
 	if (parse_cmdline(&test_config, argc, argv) != 0)
 		return -1;
@@ -473,6 +474,8 @@ int main(int argc, char *argv[])
 
 	xio_init();
 
+  xio_set_opt(NULL, XIO_OPTLEVEL_ACCELIO, XIO_OPTNAME_LOG_LEVEL,
+               &xio_log_level, sizeof(xio_log_level));
 	/* set accelio max message vector used */
 	xio_set_opt(NULL,
 		    XIO_OPTLEVEL_ACCELIO, XIO_OPTNAME_MAX_IN_IOVLEN,
