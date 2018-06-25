@@ -279,6 +279,8 @@ static int on_response(struct xio_session *session,
 
 	msg_pool_put(test_params->pool, msg);
 
+	sleep(1);
+
 	if (test_params->finite_run) {
 		if (test_params->nrecv ==  test_params->disconnect_nr) {
 			xio_disconnect(test_params->connection);
@@ -731,6 +733,7 @@ int main(int argc, char *argv[])
 	int				error;
 	int				retval;
 	static int			chain_messages = CHAIN_MESSAGES;
+	enum xio_log_level xio_log_level = XIO_LOG_LEVEL_TRACE;
 
 	if (parse_cmdline(&test_config, argc, argv) != 0)
 		return -1;
@@ -746,6 +749,9 @@ int main(int argc, char *argv[])
 	memset(&cparams, 0, sizeof(cparams));
 	test_params.stat.first_time = 1;
 	test_params.finite_run = test_config.finite_run;
+
+	xio_set_opt(NULL, XIO_OPTLEVEL_ACCELIO, XIO_OPTNAME_LOG_LEVEL,
+		    &xio_log_level, sizeof(xio_log_level));
 
 	/* set accelio max message vector used */
 	xio_set_opt(NULL,
