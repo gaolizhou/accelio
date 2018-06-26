@@ -1275,10 +1275,8 @@ static int xio_poll_cq(struct xio_cq *tcq, int max_wc, int timeout_us)
         }
 		wc = &tcq->wc_array[err - 1];
 		for (i = err - 1; i >= 0; i--) {
-            TRACE_LOG("***wc[%d].wr_id=%#x wc=%#p\n", i, wc->wr_id, wc);
             if (wc->status == IBV_WC_SUCCESS &&
 				(wc->opcode == IBV_WC_RECV || wc->opcode == IBV_WC_RDMA_READ)) {
-                TRACE_LOG("wc[%d].wr_id=%#x wc=%#p\n", i, wc->wr_id, wc);
 				task = (struct xio_task *)
 					ptr_from_int64(wc->wr_id);
 				rdma_task = (struct xio_rdma_task *)task->dd_data;
