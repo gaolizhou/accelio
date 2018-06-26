@@ -167,7 +167,7 @@ static int xio_post_send(struct xio_rdma_transport *rdma_hndl,
 		  xio_send->send_wr.send_flags,
       xio_send->send_wr.sg_list[0].addr,
       xio_send->send_wr.sg_list[1].addr);
-    TRACE_LOG("xio_post_send sg_list[0]=%s, sg_list[1]=%s\n", xio_send->send_wr.sg_list[0].addr, xio_send->send_wr.sg_list[1].addr);
+    TRACE_LOG("qp=%#x, xio_post_send sg_list[0]=%s, sg_list[1]=%s\n", rdma_hndl->qp, xio_send->send_wr.sg_list[0].addr, xio_send->send_wr.sg_list[1].addr);
 	retval = ibv_post_send(rdma_hndl->qp, &xio_send->send_wr, &bad_wr);
 	if (likely(!retval)) {
 		nr_posted = num_send_reqs;
