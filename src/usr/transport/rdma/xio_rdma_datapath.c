@@ -2189,6 +2189,7 @@ static int xio_rdma_prep_rsp_out_data(
 			/* the data is outgoing via SEND but the peer will do
 			 * RDMA_READ */
 			rdma_task->out_ib_op = XIO_IB_RDMA_READ;
+			TRACE_LOG("***set XIO_IB_RDMA_READ\n");
 			/* user provided mr */
 			sg = sge_first(sgtbl_ops, sgtbl);
 			if (sge_mr(sgtbl_ops, sg)) {
@@ -2360,7 +2361,9 @@ static int xio_rdma_prep_req_out_data(
 		/* the data is outgoing via SEND but the peer will do
 		 * RDMA_READ */
 		rdma_task->out_ib_op = XIO_IB_RDMA_READ;
-		/* user provided mr */
+        TRACE_LOG("***set XIO_IB_RDMA_READ\n");
+
+        /* user provided mr */
 		sg = sge_first(sgtbl_ops, sgtbl);
 		if (sge_mr(sgtbl_ops, sg)) {
 			for_each_sge(sgtbl, sgtbl_ops, sg, i) {
