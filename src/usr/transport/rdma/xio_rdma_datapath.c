@@ -111,14 +111,14 @@ int xio_post_recv(struct xio_rdma_transport *rdma_hndl,
 	retval = ibv_post_srq_recv(rdma_hndl->tcq->srq->srq,
 			&rdma_task->rxd.recv_wr, &bad_wr);
 #else
-  TRACE_LOG("num_recv_bufs=%d, qp=%#p, wr_id=%#X, num_sge=%d, sg[0]=%d,%#p\n",
+  TRACE_LOG("xio_post_recv num_recv_bufs=%d, qp=%#p, wr_id=%#X, num_sge=%d, sg[0]=%d,%#p\n",
              num_recv_bufs, rdma_hndl->qp, rdma_task->rxd.recv_wr.wr_id, rdma_task->rxd.recv_wr.num_sge,
              rdma_task->rxd.recv_wr.sg_list[0].length, rdma_task->rxd.recv_wr.sg_list[0].addr);
 	{
 		struct ibv_recv_wr *wr;
 		int i = 0;
 		for (wr = &rdma_task->rxd.recv_wr; wr != NULL; wr = wr->next) {
-			TRACE_LOG("num_recv_bufs[%d], wr_id=%#x, num_sge=%d, sg[0]=%d,%#p\n",
+			TRACE_LOG("xio_post_recv num_recv_bufs[%d], wr_id=%#x, num_sge=%d, sg[0]=%d,%#p\n",
 					  i++, wr->wr_id, wr->num_sge,
 					wr->sg_list[0].length, wr->sg_list[0].addr);
 		}
@@ -160,14 +160,14 @@ static int xio_post_send(struct xio_rdma_transport *rdma_hndl,
 	struct ibv_send_wr	*bad_wr;
 	int			retval, nr_posted;
 
-	TRACE_LOG("num_sge:%d, len1:%d, len2:%d, send_flags:%d, addr1=%#p, addr2=%#p\n",
+	TRACE_LOG("xio_post_send num_sge:%d, len1:%d, len2:%d, send_flags:%d, addr1=%#p, addr2=%#p\n",
 		  xio_send->send_wr.num_sge,
 		  xio_send->send_wr.sg_list[0].length,
 		  xio_send->send_wr.sg_list[1].length,
 		  xio_send->send_wr.send_flags,
       xio_send->send_wr.sg_list[0].addr,
       xio_send->send_wr.sg_list[1].addr);
-    TRACE_LOG("sg_list[0]=%s, sg_list[1]=%s\n", xio_send->send_wr.sg_list[0].addr, xio_send->send_wr.sg_list[1].addr);
+    TRACE_LOG("xio_post_send sg_list[0]=%s, sg_list[1]=%s\n", xio_send->send_wr.sg_list[0].addr, xio_send->send_wr.sg_list[1].addr);
 	retval = ibv_post_send(rdma_hndl->qp, &xio_send->send_wr, &bad_wr);
 	if (likely(!retval)) {
 		nr_posted = num_send_reqs;
@@ -1178,7 +1178,7 @@ static XIO_F_ALWAYS_INLINE void xio_handle_wc(struct ibv_wc *wc,
 	case IBV_WC_RECV:
 		task->last_in_rxq = last_in_rxq;
 		xio_rdma_rx_handler(rdma_hndl, task);
-		TRACE_LOG("wr_id=%#x, status=%#x, opcode=%#x\n", wc->wr_id, wc->status, wc->opcode);
+		TRACE_LOG("RECV_HANDLE wr_id=%#x, status=%#x, opcode=%#x\n", wc->wr_id, wc->status, wc->opcode);
 		break;
 	case IBV_WC_SEND:
 	case IBV_WC_RDMA_WRITE:
