@@ -217,11 +217,6 @@ static int xio_dereg_mr(struct xio_mr *tmr)
 
 	return 0;
 }
-static struct ibv_mr *ibv_xio_reg_mr(struct ibv_exp_reg_mr_in *in)
-{
-	TRACE_LOG("ibv_reg_mr addr=%#p, len=%d\n", in->addr, in->length);
-	return ibv_reg_mr(in->pd, in->addr, in->length, in->exp_access);
-}
 
 /*---------------------------------------------------------------------------*/
 /* xio_reg_mr_ex_dev							     */
